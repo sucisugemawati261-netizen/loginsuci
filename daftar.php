@@ -6,11 +6,11 @@ include 'koneksi.php';
 // MENGGUNAKAN $_REQUEST agar bisa dites lewat browser (GET) maupun aplikasi Kodular (POST)
 $username  = $_REQUEST['username'] ?? '';
 $password  = $_REQUEST['password'] ?? '';
-$nama_lengkap      = $_REQUEST['nama_lengkap'] ?? '';
+$nama      = $_REQUEST['nama'] ?? '';
 $email     = $_REQUEST['email'] ?? '';
 
 // 1. Validasi: Memastikan tidak ada kolom inputan yang kosong saat mendaftar
-if ($username == "" || $password == "" || $nama_lengkap == "" || $email == "") {
+if ($username == "" || $password == "" || $nama == "" || $email == "") {
     echo "Tidak Boleh Ada Yang Kosong!";
 } else {
     try {
@@ -30,14 +30,14 @@ if ($username == "" || $password == "" || $nama_lengkap == "" || $email == "") {
             $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
             // 4. Perintah SQL untuk menyimpan data ke tabel 'users'
-            $query_simpan = "INSERT INTO users (username, password, nama_lengkap, email) 
-                             VALUES (:username, :password, :nama_lengkap, :email)";
+            $query_simpan = "INSERT INTO users (username, password, nama, email) 
+                             VALUES (:username, :password, :nama, :email)";
             
             $stmt_simpan = $conn->prepare($query_simpan);
             $eksekusi = $stmt_simpan->execute([
                 ':username' => $username,
                 ':password' => $password, // Menyimpan versi aman ter-hash
-                ':nama_lengkap'     => $nama_lengkap,
+                ':nama'     => $nama,
                 ':email'    => $email
             ]);
 
